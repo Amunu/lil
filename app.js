@@ -49,7 +49,8 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.post('/',routes.doIndex);
 
-app.get('/users', routes.user)
+app.get('/user', routes.checkLogin);
+app.get('/user', routes.user)
 app.get('/u/:user', routes.user);
 
 app.get('/reg', routes.checkNotLogin);
@@ -63,6 +64,12 @@ app.get('/regi',routes.regi);
 
 //app.post('/regi', routes.checkNotReg);
 app.post('/regi', routes.doRegi);
+
+app.get('/change', routes.checkLogin);
+app.get('/change',routes.change);
+
+app.post('/change', routes.checkLogin);
+app.post('/change',routes.doChange);
 
 app.get('/logout', routes.checkLogin);
 app.get('/logout', routes.logout);

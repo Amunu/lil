@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><%= user.name %></title>
+    <title>change</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
@@ -34,7 +34,7 @@
         <ul class="nav">
           <li class="active"><a href="/">首页</a></li>
           <li> <a href="http://acm.nbut.edu.cn">NBUT-ACM在线评测系统</a></li>
-        	  <% if (!user) { %>
+           <% if (!user) { %>
                   <li><a href="/">登入</a></li>
                   <li><a href="/reg">注册</a></li>
                   <% } else { %>
@@ -45,22 +45,47 @@
             </nav>
           </div>
           <%- message %>
-          <div class="login">
-            <div class="login-screen">
-              <div class="login-icon">
-                <img src="img/me.jpg">
-                <h4>About <%= user.name %></h4>
-                <a href="/change">修改</a>
-              </div>
-              <form>
-                  <h6>姓名:<%= user.id %></h6>
-                  <h6>班级:<%= user.class %></h6>
-                  <h6>学号:<%= user.num %></h6>
-                  <h6>长号:<%= user.lphone %></h6>
-                  <h6>短号:<%= user.sphone %></h6>
-              </form>
-            </div>
+    <div class="login">
+        <div class="login-screen">
+          <div class="login-icon">
+            <img src="img/reg1.gif">
+            <h4>修改(>^ω^<)</h4>
           </div>
+      <form method="post">
+          <div class="login-form">
+            <div class="form-group">
+              <input type="text" class="form-control login-field" value="<%= user.id %>" placeholder="姓名(是身份证上的哦~)" name="loginrealname" required>
+              <label class="login-field-icon fui-user" for="loginname"></label>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control login-field" value="<%= user.num %>" placeholder="长学号" name="loginnum" required>
+              <label class="login-field-icon fui-heart" for="login-pass"></label>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control login-field" value="<%= user.class %>" placeholder="班级(格式：计科111)" name="loginclass" required>
+              <label class="login-field-icon fui-new" for="login-pass"></label>
+            </div>
+
+            <div class="form-group">
+              <input type="phone" class="form-control login-field" value="<%= user.lphone %>" placeholder="手机长号(用于飞信通知)" name="loginphone" required>
+              <label class="login-field-icon fui-cmd" for="login-pass"></label>
+            </div>
+
+            <div class="form-group">
+              <input type="phone" class="form-control login-field" value="<%= user.sphone %>" placeholder="手机短号(用于平时联系)" name="loginshortphone" required>
+              <label class="login-field-icon fui-cmd" for="login-pass"></label>
+            </div>
+             <div class="form-actions">
+                  <button type="submit" class="btn btn-primary  btn-lg btn-block">o(≧v≦)o~~完成！</button>
+             </div>
+            <a class="login-link" href="/reg">返回</a>
+          </div>
+      </form>
+        </div>
+    </div>
+    
     <!-- /navbar -->
     <!-- /.container -->
     <!-- Load JS here for greater good =============================-->

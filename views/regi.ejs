@@ -38,6 +38,7 @@
                   <li><a href="/">登入</a></li>
                   <li><a href="/reg">注册</a></li>
                   <% } else { %>
+                  <li><a href="/user"><%= user.name %></a></li>
                   <li><a href="/logout">登出</a></li>
                   <% } %>
                 </ul>
@@ -50,36 +51,38 @@
             <img src="img/reg1.gif">
             <h4>最后一步了(>^ω^<)</h4>
           </div>
-
+      <form method="post">
           <div class="login-form">
             <div class="form-group">
-              <input type="text" class="form-control login-field" value="" placeholder="姓名(是身份证上的哦~)" id="login-realname" required>
-              <label class="login-field-icon fui-user" for="login-name"></label>
+              <input type="text" class="form-control login-field" value="" placeholder="姓名(是身份证上的哦~)" name="loginrealname" required>
+              <label class="login-field-icon fui-user" for="loginname"></label>
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control login-field" value="" placeholder="长学号" id="login-num" required>
+              <input type="text" class="form-control login-field" value="" placeholder="长学号" name="loginnum" required>
               <label class="login-field-icon fui-heart" for="login-pass"></label>
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control login-field" value="" placeholder="班级" id="login-class" required>
+              <input type="text" class="form-control login-field" value="" placeholder="班级(格式：计科111)" name="loginclass" required>
               <label class="login-field-icon fui-new" for="login-pass"></label>
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control login-field" value="" placeholder="手机长号(用于飞信通知)" id="login-phone" required>
+              <input type="phone" class="form-control login-field" value="" placeholder="手机长号(用于飞信通知)" name="loginphone" required>
               <label class="login-field-icon fui-cmd" for="login-pass"></label>
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control login-field" value="" placeholder="手机短号(用于平时联系)" id="login-shortphone" required>
+              <input type="phone" class="form-control login-field" value="" placeholder="手机短号(用于平时联系)" name="loginshortphone" required>
               <label class="login-field-icon fui-cmd" for="login-pass"></label>
             </div>
-
-            <a class="btn btn-primary btn-lg btn-block" href="#">o(≧v≦)o~~完成！</a>
+             <div class="form-actions">
+                  <button type="submit" class="btn btn-primary  btn-lg btn-block">o(≧v≦)o~~完成！</button>
+             </div>
             <a class="login-link" href="/reg">返回</a>
           </div>
+      </form>
         </div>
     </div>
     

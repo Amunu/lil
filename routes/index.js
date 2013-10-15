@@ -3,12 +3,12 @@
  * GET home page.
  */
 var crypto = require('crypto');
-var User = require('../models/user.js');
+var User = require('../models/user');
 
 exports.index = function(req, res){
   res.render('index', {
 	title: '首页',
-        user: req.session.user
+    user: req.session.user
   });
 };
 
@@ -27,17 +27,61 @@ exports.doIndex = function(req, res){
         }
         req.session.user = user;
         req.session.success = '欢迎回来～主人(>^ω^<)';
-        res.redirect('/');
+        res.redirect('/user');
     });
 }
 exports.user = function(req, res) {
-    
+    res.render('user',{
+        title: 'user',
+        user: req.session.user
+    });
 };
 exports.regi = function(req, res){
-    res.render('regi');
+    res.render('regi',{
+        title: '用户注册',
+        user: req.session.user
+    });
 }
 exports.doRegi = function(req, res){
-    
+    if(req.body.loginnum.length !== 11){
+        req.session.error = "请输入正确的学号";
+        return res.redirect('/regi');
+    }
+    if(req.body.loginphone.length !== 11){
+        req.session.error = "请输入正确的长号";
+        return res.redirect('/regi');
+    }
+    if(req.body.loginshortphone.length !== 6){
+        req.session.error = "请输入正确的短号";
+        return res.redirect('/regi');
+    }    
+    var newUser = new User({
+        name: req.session.user.name,
+        password: req.session.user.password,
+        id : req.body.loginrealname,
+        num : req.body.loginnum,
+        class : req.body.loginclass,
+        lphone : req.body.loginphone,
+        sphone : req.body.loginshortphone
+    });
+    console.log({
+        name: req.session.user.name,
+        password: req.session.user.password,
+        id : req.body.loginrealname,
+        num : req.body.loginnum,
+        class : req.body.loginclass,
+        lphone : req.body.loginphone,
+        sphone : req.body.loginshortphone
+    });
+    User.update(newUser, function(err, user){
+        if (err) {
+            req.session.error = err;
+            return res.redirect('/regi');
+        }
+        req.session.user = newUser;
+        req.session.success = 'hello～主人(>^ω^<)';
+        return res.redirect('/user');
+    });
 }
 exports.reg = function(req, res){
 	res.render('reg', {
@@ -50,13 +94,22 @@ exports.doReg = function(req, res){
         req.session.error = '两遍密码不一样哦～';
         return res.redirect('/reg');
     }
+    if(req.body.password.length < 6){
+        req.session.error = '密码要大于6位~';
+        return res.redirect('/reg');
+    }
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password + "nbut").digest('base64');
    // var password = req.body.password;
 
     var newUser = new User({
         name: req.body.username,
-        password: password
+        password: password,
+        id : "",
+        num : "",
+        class : "",
+        lphone : "",
+        sphone : ""
     });
 
     User.get(newUser.name, function(err, user) {
@@ -67,7 +120,7 @@ exports.doReg = function(req, res){
             req.session.error = err;
             return res.redirect('/reg');
         }
-
+ 
         newUser.save(function(err) {
             if (err) {
                 req.session.error = err;
@@ -80,12 +133,62 @@ exports.doReg = function(req, res){
         });
     });
 }
+exports.change = function(req, res) {
+    res.render('change', {
+    title: 'change',
+    user: req.session.user
+  });
+    console.log("dshagdsa");
+};
+
+exports.doChange = function(req, res) {
+     if(req.body.loginnum.length !== 11){
+        req.session.error = "请输入正确的学号";
+        return res.redirect('/change');
+    }
+    if(req.body.loginphone.length !== 11){
+        req.session.error = "请输入正确的长号";
+        return res.redirect('/change');
+    }
+    if(req.body.loginshortphone.length !== 6){
+        req.session.error = "请输入正确的短号";
+        return res.redirect('/change');
+    }    
+    var newUser = new User({
+        name: req.session.user.name,
+        password: req.session.user.password,
+        id : req.body.loginrealname,
+        num : req.body.loginnum,
+        class : req.body.loginclass,
+        lphone : req.body.loginphone,
+        sphone : req.body.loginshortphone
+    });
+    console.log({
+        name: req.session.user.name,
+        password: req.session.user.password,
+        id : req.body.loginrealname,
+        num : req.body.loginnum,
+        class : req.body.loginclass,
+        lphone : req.body.loginphone,
+        sphone : req.body.loginshortphone
+    });
+    User.update(newUser, function(err, user){
+        if (err) {
+            req.session.error = err;
+            return res.redirect('/change');
+        }
+        req.session.user = newUser;
+        req.session.success = '修改成功(>^ω^<)';
+        return res.redirect('/user');
+    });
+}
 
 exports.logout = function(req, res) {
     req.session.user = null;
     req.session.success =  '主人T T再见';
     res.redirect('/');
 };
+
 
 exports.checkLogin = function(req, res, next) {
     if (!req.session.user) {
